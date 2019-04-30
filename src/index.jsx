@@ -9,7 +9,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-          <h1>グローバルな人材向けの時計</h1>
         <Timer />
       </div>
     )

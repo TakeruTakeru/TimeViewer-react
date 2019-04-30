@@ -1,0 +1,122 @@
+.mock {
+  background: pink;
+  border-radius: 50%;
+}
+
+#time-view h1 {
+  color: darkslategray;
+  border-bottom: 1px solid black;
+  font-family: "Noto Sans TC", sans-serif;
+  font-family: "M PLUS 1p", sans-serif;
+}
+
+.select-box {
+  text-align: right;
+  margin: 5px;
+}
+
+.country-list {
+  list-style: none;
+  padding: 0;
+}
+
+.item-title {
+  font-size: 2.8rem;
+  font-weight: 200;
+  letter-spacing: 1px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-family: 'M PLUS 1p', sans-serif;
+  font-family: 'Wendy One', sans-serif;
+  font-family: 'Playfair Display', serif;
+}
+
+.america {
+  background: -webkit-linear-gradient(
+    -45deg,
+    #0033ff,
+    #0066cc,
+    #3366cc,
+    #cc33ff,
+    #ff00ff,
+    #cc0033,
+    #ff3333
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.japan {
+  background: -webkit-linear-gradient(
+    top,
+    #009900 0%,
+    #008800 50%,
+    #007700 51%,
+    #006600 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hongkong {
+  background: -webkit-linear-gradient(
+    top,
+    #ffb76b 0%,
+    #ffa73d 50%,
+    #ff7c00 51%,
+    #ff7f04 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.item-title::after,
+.item-title::before {
+  content: "-";
+}
+
+.digital-clock {
+  font-size: 2rem;
+  font-weight: 200;
+  letter-spacing: 1px;
+  margin: 5px;
+}
+
+.clock-wrapper {
+  text-align: center;
+  padding-left: 50%;
+  margin: 10px;
+}
+
+.clock {
+  border-radius: 50%;
+}
+
+.am {
+    background: rgb(243, 187, 82);
+}
+
+.pm {
+    background: rgba(90, 26, 240, 0.2)
+}
+
+.miracle-clock {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #a6d900 0%, #ff4454 100%);
+  opacity: 0.5;
+  border-radius: 50%;
+  animation: huerotator 3s infinite alternate;
+}
+
+@keyframes huerotator {
+  0% {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+
+  100% {
+    -webkit-filter: hue-rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
+}
