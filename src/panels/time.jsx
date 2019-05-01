@@ -1,6 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
 import moment from "moment";
+import Loading from '../panels/loading';
+import {getTokyoForecast} from '../api/forecast';
 import Clock from "react-clock";
 import DigitalClock from "react-live-clock";
 import { Select } from "antd";
@@ -29,6 +31,7 @@ const COUNTRY_CONFIG = {
 
 export default class Timer extends React.Component {
   componentDidMount() {
+    console.log(getTokyoForecast());
     moment.locale("ja");
     setInterval(() => {
       this.updateClock();
@@ -47,16 +50,19 @@ export default class Timer extends React.Component {
 
   render() {
     if (!this.state) {
-      return <div className="loading">Loading...</div>;
+      return <Loading />;
     }
     const { gtc } = this.state;
     const newYork = moment.utc().utcOffset(-240);
     const asiaTokyo = moment.utc().utcOffset(540);
+    const hongkong = moment.utc().utcOffset(480)
     const asiaTokyoDate = new Date(asiaTokyo.format().match(/(.*)(?=\+)/g)[0]);
     const newYorkDate = new Date(newYork.format().match(/(.*)(?=\-)/g)[0]);
+    const hongkongDate = new Date(hongkong.format().match(/(.*)(?=\+)/g)[0]);
 
     const classNewYorkClock = newYorkDate.getHours() < 12 ? "am" : "pm";
     const classTokyoClock = asiaTokyoDate.getHours() < 12 ? "am" : "pm";
+    const classHongkongClock = hongkongDate.getHours() < 12 ? "am" : "pm";
 
 
     const usa = COUNTRY_CONFIG.USA;
@@ -118,7 +124,7 @@ export default class Timer extends React.Component {
               timezone={hk.TIMEZONE}
             />
             <div className="clock-wrapper">
-              <Clock className={"clock "+ "miracle-clock"} value={asiaTokyoDate} />
+              <Clock className={"clock "+ classHongkongClock} value={hongkongDate} />
             </div>
           </li>
         </ul>
