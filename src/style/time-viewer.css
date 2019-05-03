@@ -81,9 +81,13 @@
   margin: 5px;
 }
 
+.chart-wrapper {
+  display: inline-block;
+}
+
 .clock-wrapper {
+  display: inline-block;
   text-align: center;
-  padding-left: 50%;
   margin: 10px;
 }
 

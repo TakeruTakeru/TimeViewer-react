@@ -1,11 +1,13 @@
 
 export default class ServerAdapter {
     static async get(url){
-      console.log('get')
       const fetchURL = url;
       const response = await fetch(fetchURL).then(res => {
-        return res;
-      });
-      return response;
+        if (res.status !== 200) {
+          return null;
+        }
+        return res.text();
+      });   
+      return JSON.parse(response);
     }
 }

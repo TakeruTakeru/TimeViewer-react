@@ -1,8 +1,8 @@
 import React from "react";
-import { render } from "react-dom";
 import moment from "moment";
-import Loading from '../panels/loading';
-import {getTokyoForecast} from '../api/forecast';
+import Loading from "../panels/loading";
+import { getForecast } from "../api/forecast";
+import TempChart from "./chart";
 import Clock from "react-clock";
 import DigitalClock from "react-live-clock";
 import { Select } from "antd";
@@ -29,9 +29,14 @@ const COUNTRY_CONFIG = {
   }
 };
 
+function unpack(obj, key, subKey) {
+  const result = subKey ? obj.map(v => v[key][subKey]) : obj.map(v => v[key]);
+  return result;
+}
+
 export default class Timer extends React.Component {
   componentDidMount() {
-    console.log(getTokyoForecast());
+    this.getForecast('tokyo')
     moment.locale("ja");
     setInterval(() => {
       this.updateClock();
@@ -44,18 +49,24 @@ export default class Timer extends React.Component {
     });
   };
 
-  jumpLink = e => {
-      
+  getForecast = async cityName => {
+    const result = await getForecast(cityName).then(res => {
+      return res.list;
+    });
+    this.setState({
+      [cityName]: result.slice(0, 5)
+    });
   };
 
   render() {
     if (!this.state) {
       return <Loading />;
     }
-    const { gtc } = this.state;
+
+    const { tokyo } = this.state;
     const newYork = moment.utc().utcOffset(-240);
     const asiaTokyo = moment.utc().utcOffset(540);
-    const hongkong = moment.utc().utcOffset(480)
+    const hongkong = moment.utc().utcOffset(480);
     const asiaTokyoDate = new Date(asiaTokyo.format().match(/(.*)(?=\+)/g)[0]);
     const newYorkDate = new Date(newYork.format().match(/(.*)(?=\-)/g)[0]);
     const hongkongDate = new Date(hongkong.format().match(/(.*)(?=\+)/g)[0]);
@@ -64,26 +75,17 @@ export default class Timer extends React.Component {
     const classTokyoClock = asiaTokyoDate.getHours() < 12 ? "am" : "pm";
     const classHongkongClock = hongkongDate.getHours() < 12 ? "am" : "pm";
 
-
     const usa = COUNTRY_CONFIG.USA;
     const jp = COUNTRY_CONFIG.JP;
     const hk = COUNTRY_CONFIG.HK;
 
+    console.log(tokyo)
+    const x = unpack(tokyo, 'dt_txt');
+    const y = unpack(tokyo, 'main', 'temp');
+    console.log(y)    
     return (
       <div id="time-view">
         <h1>グローバルな人材向けの時計</h1>
-        <div className="select-box">
-          <Select
-            placeholder="Choose Timezone"
-            style={{ width: 200 }}
-            size={"large"}
-            onSelect={this.jumpLink}
-          >
-            <Option value={usa.LINK}>Usa</Option>
-            <Option value={jp.LINK}>Japan</Option>
-            <Option value={hk.LINK}>Hong kong</Option>
-          </Select>
-        </div>
         <ul className="country-list">
           <li className="items">
             <a name={usa.LINK}>
@@ -95,8 +97,14 @@ export default class Timer extends React.Component {
               ticking={true}
               timezone={usa.TIMEZONE}
             />
+             <div className="chart-wrapper">
+              <TempChart name={'preparing...'} />
+            </div>
             <div className="clock-wrapper">
-              <Clock className={"clock "+ classNewYorkClock} value={newYorkDate} />
+              <Clock
+                className={"clock " + classNewYorkClock}
+                value={newYorkDate}
+              />
             </div>
           </li>
           <li className="items">
@@ -109,8 +117,14 @@ export default class Timer extends React.Component {
               ticking={true}
               timezone={jp.TIMEZONE}
             />
+            <div className="chart-wrapper">
+              <TempChart name={'tokyo Temp'} x={x} y={y} />
+            </div>
             <div className="clock-wrapper">
-              <Clock className={"clock "+ classTokyoClock} value={asiaTokyoDate} />
+              <Clock
+                className={"clock " + classTokyoClock}
+                value={asiaTokyoDate}
+              />
             </div>
           </li>
           <li className="items">
@@ -123,8 +137,14 @@ export default class Timer extends React.Component {
               ticking={true}
               timezone={hk.TIMEZONE}
             />
+             <div className="chart-wrapper">
+              <TempChart name={'preparing...'} />
+            </div>
             <div className="clock-wrapper">
-              <Clock className={"clock "+ classHongkongClock} value={hongkongDate} />
+              <Clock
+                className={"clock " + classHongkongClock}
+                value={hongkongDate}
+              />
             </div>
           </li>
         </ul>
