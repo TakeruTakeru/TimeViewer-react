@@ -81,6 +81,10 @@
   margin: 5px;
 }
 
+.digital-wrapper {
+  display: block;
+}
+
 .chart-wrapper {
   display: inline-block;
 }

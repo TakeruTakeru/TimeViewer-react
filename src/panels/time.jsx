@@ -36,7 +36,7 @@ function unpack(obj, key, subKey) {
 
 export default class Timer extends React.Component {
   componentDidMount() {
-    this.getForecast('tokyo')
+    this.getForecast("tokyo");
     moment.locale("ja");
     setInterval(() => {
       this.updateClock();
@@ -79,10 +79,10 @@ export default class Timer extends React.Component {
     const jp = COUNTRY_CONFIG.JP;
     const hk = COUNTRY_CONFIG.HK;
 
-    console.log(tokyo)
-    const x = unpack(tokyo, 'dt_txt');
-    const y = unpack(tokyo, 'main', 'temp');
-    console.log(y)    
+    console.log(tokyo);
+    const x = unpack(tokyo, "dt_txt");
+    const y = unpack(tokyo, "main", "temp");
+    console.log(y);
     return (
       <div id="time-view">
         <h1>グローバルな人材向けの時計</h1>
@@ -91,15 +91,18 @@ export default class Timer extends React.Component {
             <a name={usa.LINK}>
               <h3 className="item-title">{usa.TITLE}</h3>
             </a>
-            <DigitalClock
-              className="digital-clock america"
-              format={FORMAT}
-              ticking={true}
-              timezone={usa.TIMEZONE}
-            />
-             <div className="chart-wrapper">
-              <TempChart name={'preparing...'} />
+            <div className="digital-wrapper">
+              <DigitalClock
+                className="digital-clock america"
+                format={FORMAT}
+                ticking={true}
+                timezone={usa.TIMEZONE}
+              />
             </div>
+
+            {/* <div className="chart-wrapper">
+              <TempChart name={'preparing...'} />
+            </div> */}
             <div className="clock-wrapper">
               <Clock
                 className={"clock " + classNewYorkClock}
@@ -111,15 +114,17 @@ export default class Timer extends React.Component {
             <a name={jp.LINK}>
               <h3 className="item-title">{jp.TITLE}</h3>
             </a>
-            <DigitalClock
-              className="digital-clock japan"
-              format={FORMAT}
-              ticking={true}
-              timezone={jp.TIMEZONE}
-            />
-            <div className="chart-wrapper">
-              <TempChart name={'tokyo Temp'} x={x} y={y} />
+            <div className="digital-wrapper">
+              <DigitalClock
+                className="digital-clock japan"
+                format={FORMAT}
+                ticking={true}
+                timezone={jp.TIMEZONE}
+              />
             </div>
+            {/* <div className="chart-wrapper">
+              <TempChart name={'tokyo Temp'} x={x} y={y} />
+            </div> */}
             <div className="clock-wrapper">
               <Clock
                 className={"clock " + classTokyoClock}
@@ -131,15 +136,17 @@ export default class Timer extends React.Component {
             <a name={hk.LINK}>
               <h3 className="item-title">{hk.TITLE}</h3>
             </a>
-            <DigitalClock
-              className="digital-clock hongkong"
-              format={FORMAT}
-              ticking={true}
-              timezone={hk.TIMEZONE}
-            />
-             <div className="chart-wrapper">
-              <TempChart name={'preparing...'} />
+            <div className="digital-wrapper">
+              <DigitalClock
+                className="digital-clock hongkong"
+                format={FORMAT}
+                ticking={true}
+                timezone={hk.TIMEZONE}
+              />
             </div>
+            {/* <div className="chart-wrapper">
+              <TempChart name={'preparing...'} />
+            </div> */}
             <div className="clock-wrapper">
               <Clock
                 className={"clock " + classHongkongClock}
